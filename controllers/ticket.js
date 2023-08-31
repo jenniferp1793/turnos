@@ -1,4 +1,4 @@
-const express = require('express');
+/* const express = require('express');
 const router = express.Router();
 
 // Modelo simulado para los tickets
@@ -11,3 +11,4 @@ router.post('/emitir-ticket', (req, res) => {
 });
 
 module.exports = router;
+ */

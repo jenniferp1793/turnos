@@ -1,4 +1,4 @@
-const express = require('express');
+/* const express = require('express');
 const router = express.Router();
 
 // Ruta para atender un ticket
@@ -10,3 +10,4 @@ router.post('/atender-ticket/:escritorio', (req, res) => {
 });
 
 module.exports = router;
+ */

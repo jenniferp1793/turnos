@@ -1,42 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="container">
-        <div class="uno">
-        <h1 style="font-family: cursive;">Programa de colas</h1>
-        <button style="border-radius: 20px;">Pantalla publica</button>
-        <button style="border-radius: 20px;">Crear tickets</button>
-        </div>
-    <div class="dos">
-        <div class="syr">
-          <input type="text" id="nombre" name="nombre" required /><br />
-          <button style="border-radius: 20px; margin-top: 3%;">Agregar</button>
-        </div>
-      </div>
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>Gestión de Turnos</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="uno">
+        <h4>Bienvenido a nuestro portal, aquí podrás crear ticket para atención en caja </h4>
+        <!-- <button onclick="crear()" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">Crear Ticket</button> -->
+        <button onclick="crear()" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary";>Crear Ticket</button>
+        <button type="button" class="btn btn-primary";>Pantalla pública</button>
+        <ul id="lista-turnos"></ul>
+    </div>
+    <div class="dos">
+        <h4>Escritorio</h4>
+        <label for="nombre">Seleccionar:</label>
+        <input type="number" id="nombre">
+        <button type="button" class="btn btn-secondary">Ingresar</button>
+    </div>
+    
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" >
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Ticket</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <span id="error" ></span>
+            <label for="nombre">Nombre:</label><input type="number" id="nombre">
+        </div>
+        <span id="error2" ></span>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" onclick="guardar()">Guardar</button>
+        </div>
     </div>
 </div>
-  </body>
-</html>
-<style>
-    .container{
-   position: relative; 
-   width: 100%;
-   max-width: 1000px;
-   min-height: 1000px;
-   background-color: rgb(253, 253, 253);
-   display:grid;
-   grid-template-columns: 1fr 2fr;
-   
-}
+</div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="models/turno.js"></script>
+    <script src="controllers/turno.js"></script>
+    <script src="views/turno.js"></script>
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', () => {
+        const model = new TurnoModel();
+        const controller = new TurnoController(model);
+        const view = new TurnoView(controller);
 
-.dos{
-    margin-top: 20%;
-   
-}
-</style>
+        const guardarButton = document.querySelector('.modal-footer .btn-primary');
+        const nombreInput = document.getElementById('nombreInput');
+
+        // Open the modal when the "Crear Ticket" button is clicked
+        const crearTicketButton = document.querySelector('.btn-primary[data-bs-target="#exampleModal"]');
+        crearTicketButton.addEventListener('click', () => {
+            // Clear the input field when opening the modal
+            nombreInput.value = '';
+        });
+
+        guardarButton.addEventListener('click', () => {
+            const nombre = nombreInput.value;
+            controller.agregarTurno(nombre, new Date().toLocaleString());
+            view.actualizarListaTurnos();
+            nombreInput.value = ''; // Clear the input after adding
+        });
+    });
+        const model = new TurnoModel();
+        const controller = new TurnoController(model);
+        const view = new TurnoView(controller);
+    </script>
+</body>
+</html>
+    <style>
+        body{
+            background-image: url("https://static.vecteezy.com/system/resources/previews/021/736/678/non_2x/background-biru-keren-dan-kosong-abstract-untuk-template-desain-powerpoint-ppt-free-vector.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn btn-primary{
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+    </style>
